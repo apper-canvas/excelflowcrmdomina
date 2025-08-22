@@ -1,6 +1,7 @@
 [
   {
     "Id": 1,
+    "title": "Website Redesign Project",
     "company": "Acme Corporation",
     "contactName": "Sarah Johnson",
     "dealValue": 25000,
@@ -10,8 +11,9 @@
     "createdAt": "2024-01-01",
     "updatedAt": "2024-01-15"
   },
-  {
+{
     "Id": 2,
+    "title": "CRM Implementation",
     "company": "TechStart Solutions",
     "contactName": "Michael Chen",
     "dealValue": 45000,
@@ -21,8 +23,9 @@
     "createdAt": "2024-01-05",
     "updatedAt": "2024-01-18"
   },
-  {
+{
     "Id": 3,
+    "title": "Enterprise Software Suite",
     "company": "Global Industries Inc",
     "contactName": "Emily Rodriguez",
     "dealValue": 75000,
@@ -32,8 +35,9 @@
     "createdAt": "2024-01-10",
     "updatedAt": "2024-01-20"
   },
-  {
+{
     "Id": 4,
+    "title": "Mobile App Development",
     "company": "InnovateTech",
     "contactName": "David Thompson",
     "dealValue": 32000,
@@ -43,8 +47,9 @@
     "createdAt": "2024-01-08",
     "updatedAt": "2024-01-25"
   },
-  {
+{
     "Id": 5,
+    "title": "Data Migration Services",
     "company": "DataFlow Systems",
     "contactName": "Lisa Park",
     "dealValue": 18000,
@@ -54,8 +59,9 @@
     "createdAt": "2024-01-12",
     "updatedAt": "2024-01-22"
   },
-  {
+{
     "Id": 6,
+    "title": "Cloud Infrastructure Setup",
     "company": "CloudTech Networks",
     "contactName": "James Wilson",
     "dealValue": 55000,
@@ -65,8 +71,9 @@
     "createdAt": "2024-01-15",
     "updatedAt": "2024-01-25"
   },
-  {
+{
     "Id": 7,
+    "title": "Digital Marketing Platform",
     "company": "Digital Solutions Ltd",
     "contactName": "Maria Garcia",
     "dealValue": 28000,
@@ -76,8 +83,9 @@
     "createdAt": "2024-01-18",
     "updatedAt": "2024-01-28"
   },
-  {
+{
     "Id": 8,
+    "title": "Business Intelligence Tools",
     "company": "Nexus Group",
     "contactName": "Robert Kim",
     "dealValue": 42000,
@@ -87,8 +95,9 @@
     "createdAt": "2024-01-20",
     "updatedAt": "2024-01-30"
   },
-  {
+{
     "Id": 9,
+    "title": "ERP System Integration",
     "company": "SmartBiz Solutions",
     "contactName": "Jennifer Davis",
     "dealValue": 67000,
@@ -98,8 +107,9 @@
     "createdAt": "2024-01-22",
     "updatedAt": "2024-02-01"
   },
-  {
+{
     "Id": 10,
+    "title": "AI-Powered Analytics Platform",
     "company": "FutureTech Labs",
     "contactName": "Alex Martinez",
     "dealValue": 89000,

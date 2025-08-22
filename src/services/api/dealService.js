@@ -33,6 +33,7 @@ class DealService {
     
 const newDeal = {
       Id: maxId + 1,
+      title: dealData.title || "",
       ...dealData,
       contactId: dealData.contactId || null,
       createdAt: new Date().toISOString(),
@@ -53,6 +54,7 @@ const newDeal = {
     
 this.deals[index] = {
       ...this.deals[index],
+      title: updateData.title !== undefined ? updateData.title : this.deals[index].title,
       ...updateData,
       contactId: updateData.contactId !== undefined ? updateData.contactId : this.deals[index].contactId,
       updatedAt: new Date().toISOString()

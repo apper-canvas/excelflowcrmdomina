@@ -13,6 +13,7 @@ import { cn } from "@/utils/cn";
 
 const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
 const [formData, setFormData] = useState({
+    title: "",
     company: "",
     contactId: "",
     contactName: "",
@@ -34,6 +35,7 @@ const [formData, setFormData] = useState({
       loadData();
       if (deal) {
 setFormData({
+          title: deal.title || "",
           company: deal.company || "",
           contactId: deal.contactId || "",
           contactName: deal.contactName || "",
@@ -44,6 +46,7 @@ setFormData({
         });
       } else {
 setFormData({
+          title: "",
           company: "",
           contactId: "",
           contactName: "",
@@ -74,8 +77,12 @@ setFormData({
     }
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
+    
+    if (!formData.title.trim()) {
+      newErrors.title = "Deal title is required";
+    }
     
     if (!formData.company.trim()) {
       newErrors.company = "Company is required";
@@ -105,6 +112,7 @@ setFormData({
     try {
 const selectedContact = contacts.find(c => c.Id === parseInt(formData.contactId));
       const dealData = {
+        title: formData.title.trim(),
         company: formData.company.trim(),
         contactId: formData.contactId ? parseInt(formData.contactId) : null,
         contactName: selectedContact ? selectedContact.name : "N/A",
@@ -134,6 +142,7 @@ const selectedContact = contacts.find(c => c.Id === parseInt(formData.contactId)
 
   const handleClose = () => {
 setFormData({
+      title: "",
       company: "",
       contactId: "",
       contactName: "",
@@ -179,7 +188,16 @@ return (
             <p className="text-gray-500">Loading companies and contacts...</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+<form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <FormField 
+              label="Deal Title" 
+              error={errors.title} 
+              required
+              value={formData.title}
+              onChange={e => handleChange("title", e.target.value)}
+              placeholder="Enter deal title"
+            />
+            
             <div className="space-y-2">
               <Label required>Company</Label>
               <select
