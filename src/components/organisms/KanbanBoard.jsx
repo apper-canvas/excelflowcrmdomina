@@ -14,7 +14,7 @@ const STAGES = [
   { id: 'Closed Won', title: 'Closed Won', color: 'green' }
 ];
 
-const KanbanBoard = () => {
+const KanbanBoard = ({ refreshTrigger = 0 }) => {
   const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,7 +34,7 @@ const KanbanBoard = () => {
 
   useEffect(() => {
     fetchDeals();
-  }, []);
+  }, [refreshTrigger]);
 
   const getDealsByStage = (stage) => {
     return deals.filter(deal => deal.stage === stage);

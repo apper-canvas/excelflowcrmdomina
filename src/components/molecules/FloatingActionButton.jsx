@@ -1,22 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
-const FloatingActionButton = ({ onClick, className, icon = "Plus", ...props }) => {
+const FloatingActionButton = ({ 
+  onClick, 
+  icon = "Plus", 
+  label = "Add",
+  className,
+  variant = "primary",
+  ...props 
+}) => {
   return (
-    <motion.button
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={onClick}
       className={cn(
-        "fixed bottom-6 right-6 h-14 w-14 bg-accent-500 text-white rounded-full shadow-lg hover:bg-accent-600 focus:outline-none focus:ring-4 focus:ring-accent-500/30 transition-colors z-50",
+        "fixed bottom-6 right-6 z-40",
         className
       )}
-      {...props}
     >
-      <ApperIcon name={icon} className="h-6 w-6 mx-auto" />
-    </motion.button>
+      <Button
+        onClick={onClick}
+        variant={variant}
+        size="lg"
+        className="rounded-full shadow-lg hover:shadow-xl transition-shadow min-w-[3.5rem] h-14"
+        {...props}
+      >
+        <ApperIcon name={icon} className="h-5 w-5 mr-0 sm:mr-2" />
+        <span className="hidden sm:inline">{label}</span>
+      </Button>
+    </motion.div>
   );
 };
 
