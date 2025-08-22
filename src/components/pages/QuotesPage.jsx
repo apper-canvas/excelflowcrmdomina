@@ -6,6 +6,7 @@ import { quoteService } from "@/services/api/quoteService";
 import Button from "@/components/atoms/Button";
 import SearchInput from "@/components/atoms/SearchInput";
 import QuoteModal from "@/components/organisms/QuoteModal";
+import QuoteDetailModal from "@/components/organisms/QuoteDetailModal";
 import Pagination from "@/components/organisms/Pagination";
 import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
@@ -17,11 +18,13 @@ const QuotesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingQuote, setEditingQuote] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedQuote, setSelectedQuote] = useState(null);
   const itemsPerPage = 10;
 
   const statusOptions = [
@@ -102,6 +105,11 @@ const QuotesPage = () => {
   const handleEditClick = (quote) => {
     setEditingQuote(quote);
     setIsModalOpen(true);
+};
+
+  const handleQuoteClick = (quote) => {
+    setSelectedQuote(quote);
+    setDetailModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -109,6 +117,10 @@ const QuotesPage = () => {
     setEditingQuote(null);
   };
 
+  const handleCloseDetailModal = () => {
+    setDetailModalOpen(false);
+    setSelectedQuote(null);
+  };
   const filteredQuotes = quotes.filter(quote => {
     const matchesSearch = 
       quote.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -243,12 +255,13 @@ const QuotesPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedQuotes.map((quote) => (
+{paginatedQuotes.map((quote) => (
                   <motion.tr
                     key={quote.Id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="hover:bg-gray-50 transition-colors"
+                    onClick={() => handleQuoteClick(quote)}
+                    className="hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
@@ -325,13 +338,25 @@ const QuotesPage = () => {
         />
       )}
 
-      {/* Modal */}
+{/* Modals */}
       <QuoteModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSave={editingQuote ? (data) => handleUpdateQuote(editingQuote.Id, data) : handleCreateQuote}
         quote={editingQuote}
         isSubmitting={isSubmitting}
+      />
+
+      <QuoteDetailModal
+        isOpen={detailModalOpen}
+        onClose={handleCloseDetailModal}
+        quote={selectedQuote}
+        onEdit={(quote) => {
+          setEditingQuote(quote);
+          setIsModalOpen(true);
+          setDetailModalOpen(false);
+        }}
+        onDelete={handleDeleteQuote}
       />
     </div>
   );
