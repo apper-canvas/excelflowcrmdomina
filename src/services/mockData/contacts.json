@@ -1,0 +1,252 @@
+[
+  {
+    "Id": 1,
+    "name": "Sarah Johnson",
+    "email": "sarah.johnson@acmecorp.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "Acme Corporation",
+    "lastContactDate": "2024-01-15",
+    "createdAt": "2023-12-01",
+    "updatedAt": "2024-01-15"
+  },
+  {
+    "Id": 2,
+    "name": "Michael Chen",
+    "email": "m.chen@techstart.io",
+    "phone": "+1 (555) 234-5678",
+    "company": "TechStart Solutions",
+    "lastContactDate": "2024-01-12",
+    "createdAt": "2023-11-15",
+    "updatedAt": "2024-01-12"
+  },
+  {
+    "Id": 3,
+    "name": "Emily Rodriguez",
+    "email": "emily.r@globalinc.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "Global Industries Inc",
+    "lastContactDate": "2024-01-10",
+    "createdAt": "2023-11-20",
+    "updatedAt": "2024-01-10"
+  },
+  {
+    "Id": 4,
+    "name": "David Thompson",
+    "email": "david@innovatetech.com",
+    "phone": "+1 (555) 456-7890",
+    "company": "InnovateTech",
+    "lastContactDate": "2024-01-08",
+    "createdAt": "2023-10-05",
+    "updatedAt": "2024-01-08"
+  },
+  {
+    "Id": 5,
+    "name": "Lisa Park",
+    "email": "lisa.park@dataflow.com",
+    "phone": "+1 (555) 567-8901",
+    "company": "DataFlow Systems",
+    "lastContactDate": "2024-01-05",
+    "createdAt": "2023-12-10",
+    "updatedAt": "2024-01-05"
+  },
+  {
+    "Id": 6,
+    "name": "James Wilson",
+    "email": "james.wilson@cloudtech.net",
+    "phone": "+1 (555) 678-9012",
+    "company": "CloudTech Networks",
+    "lastContactDate": "2024-01-03",
+    "createdAt": "2023-09-22",
+    "updatedAt": "2024-01-03"
+  },
+  {
+    "Id": 7,
+    "name": "Maria Garcia",
+    "email": "maria@digitalsol.com",
+    "phone": "+1 (555) 789-0123",
+    "company": "Digital Solutions Ltd",
+    "lastContactDate": "2023-12-28",
+    "createdAt": "2023-11-08",
+    "updatedAt": "2023-12-28"
+  },
+  {
+    "Id": 8,
+    "name": "Robert Kim",
+    "email": "r.kim@nexusgroup.com",
+    "phone": "+1 (555) 890-1234",
+    "company": "Nexus Group",
+    "lastContactDate": "2023-12-25",
+    "createdAt": "2023-10-18",
+    "updatedAt": "2023-12-25"
+  },
+  {
+    "Id": 9,
+    "name": "Jennifer Davis",
+    "email": "jennifer.davis@smartbiz.com",
+    "phone": "+1 (555) 901-2345",
+    "company": "SmartBiz Solutions",
+    "lastContactDate": "2023-12-22",
+    "createdAt": "2023-11-30",
+    "updatedAt": "2023-12-22"
+  },
+  {
+    "Id": 10,
+    "name": "Alex Martinez",
+    "email": "alex@futuretech.io",
+    "phone": "+1 (555) 012-3456",
+    "company": "FutureTech Labs",
+    "lastContactDate": "2023-12-20",
+    "createdAt": "2023-09-15",
+    "updatedAt": "2023-12-20"
+  },
+  {
+    "Id": 11,
+    "name": "Amanda Brown",
+    "email": "amanda.brown@vertex.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "Vertex Technologies",
+    "lastContactDate": "2023-12-18",
+    "createdAt": "2023-10-25",
+    "updatedAt": "2023-12-18"
+  },
+  {
+    "Id": 12,
+    "name": "Kevin Lee",
+    "email": "kevin.lee@primetech.net",
+    "phone": "+1 (555) 234-5678",
+    "company": "PrimeTech Industries",
+    "lastContactDate": "2023-12-15",
+    "createdAt": "2023-11-12",
+    "updatedAt": "2023-12-15"
+  },
+  {
+    "Id": 13,
+    "name": "Rachel Taylor",
+    "email": "rachel@streamline.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "Streamline Corp",
+    "lastContactDate": "2023-12-12",
+    "createdAt": "2023-08-20",
+    "updatedAt": "2023-12-12"
+  },
+  {
+    "Id": 14,
+    "name": "Thomas Anderson",
+    "email": "t.anderson@matrix.com",
+    "phone": "+1 (555) 456-7890",
+    "company": "Matrix Solutions",
+    "lastContactDate": "2023-12-10",
+    "createdAt": "2023-09-08",
+    "updatedAt": "2023-12-10"
+  },
+  {
+    "Id": 15,
+    "name": "Nicole White",
+    "email": "nicole.white@quantum.io",
+    "phone": "+1 (555) 567-8901",
+    "company": "Quantum Dynamics",
+    "lastContactDate": "2023-12-08",
+    "createdAt": "2023-10-14",
+    "updatedAt": "2023-12-08"
+  },
+  {
+    "Id": 16,
+    "name": "Daniel Cooper",
+    "email": "daniel@synapse.tech",
+    "phone": "+1 (555) 678-9012",
+    "company": "Synapse Technologies",
+    "lastContactDate": "2023-12-05",
+    "createdAt": "2023-11-25",
+    "updatedAt": "2023-12-05"
+  },
+  {
+    "Id": 17,
+    "name": "Stephanie Miller",
+    "email": "stephanie.miller@apex.com",
+    "phone": "+1 (555) 789-0123",
+    "company": "Apex Innovations",
+    "lastContactDate": "2023-12-03",
+    "createdAt": "2023-07-30",
+    "updatedAt": "2023-12-03"
+  },
+  {
+    "Id": 18,
+    "name": "Christopher Hall",
+    "email": "chris.hall@velocity.net",
+    "phone": "+1 (555) 890-1234",
+    "company": "Velocity Networks",
+    "lastContactDate": "2023-12-01",
+    "createdAt": "2023-08-15",
+    "updatedAt": "2023-12-01"
+  },
+  {
+    "Id": 19,
+    "name": "Laura Evans",
+    "email": "laura@pinnacle.com",
+    "phone": "+1 (555) 901-2345",
+    "company": "Pinnacle Group",
+    "lastContactDate": "2023-11-28",
+    "createdAt": "2023-09-20",
+    "updatedAt": "2023-11-28"
+  },
+  {
+    "Id": 20,
+    "name": "Brandon Scott",
+    "email": "brandon.scott@zenith.io",
+    "phone": "+1 (555) 012-3456",
+    "company": "Zenith Systems",
+    "lastContactDate": "2023-11-25",
+    "createdAt": "2023-10-01",
+    "updatedAt": "2023-11-25"
+  },
+  {
+    "Id": 21,
+    "name": "Melissa Turner",
+    "email": "melissa@catalyst.com",
+    "phone": "+1 (555) 123-7890",
+    "company": "Catalyst Solutions",
+    "lastContactDate": "2023-11-22",
+    "createdAt": "2023-08-05",
+    "updatedAt": "2023-11-22"
+  },
+  {
+    "Id": 22,
+    "name": "Jonathan Reed",
+    "email": "jonathan.reed@horizon.net",
+    "phone": "+1 (555) 234-8901",
+    "company": "Horizon Technologies",
+    "lastContactDate": "2023-11-20",
+    "createdAt": "2023-07-12",
+    "updatedAt": "2023-11-20"
+  },
+  {
+    "Id": 23,
+    "name": "Ashley Morgan",
+    "email": "ashley@summit.com",
+    "phone": "+1 (555) 345-9012",
+    "company": "Summit Enterprises",
+    "lastContactDate": "2023-11-18",
+    "createdAt": "2023-09-03",
+    "updatedAt": "2023-11-18"
+  },
+  {
+    "Id": 24,
+    "name": "Ryan Phillips",
+    "email": "ryan.phillips@edge.io",
+    "phone": "+1 (555) 456-0123",
+    "company": "Edge Computing Co",
+    "lastContactDate": "2023-11-15",
+    "createdAt": "2023-06-25",
+    "updatedAt": "2023-11-15"
+  },
+  {
+    "Id": 25,
+    "name": "Samantha Green",
+    "email": "samantha@pulse.tech",
+    "phone": "+1 (555) 567-1234",
+    "company": "Pulse Technologies",
+    "lastContactDate": "2023-11-12",
+    "createdAt": "2023-08-18",
+    "updatedAt": "2023-11-12"
+  }
+]
