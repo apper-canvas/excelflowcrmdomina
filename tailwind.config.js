@@ -4,12 +4,14 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+theme: {
     extend: {
       colors: {
         primary: {
+          25: '#F8FAFF',
           50: '#EEF2FF',
           100: '#E0E7FF',
+          400: '#6366F1',
           500: '#4F46E5',
           600: '#4338CA',
           700: '#3730A3'
@@ -26,7 +28,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']
       }
-    },
+    }
   },
   plugins: [],
 }

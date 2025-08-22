@@ -9,7 +9,8 @@ const KanbanColumn = ({
   title, 
   deals, 
   totalValue,
-  isDragOver = false 
+  isDragOver = false,
+  renderDeal
 }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
@@ -80,20 +81,22 @@ const KanbanColumn = ({
               snapshot.isDraggingOver && "bg-primary-25"
             )}
           >
-            {deals.map((deal, index) => (
-              <motion.div
-                key={deal.Id}
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <DealCard 
-                  deal={deal}
-                  isDragging={snapshot.isDraggingOver}
-                />
-              </motion.div>
-            ))}
+{deals.map((deal, index) => 
+              renderDeal ? renderDeal(deal, index) : (
+                <motion.div
+                  key={deal.Id}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <DealCard 
+                    deal={deal}
+                    isDragging={snapshot.isDraggingOver}
+                  />
+                </motion.div>
+              )
+            )}
             {provided.placeholder}
             
             {deals.length === 0 && (
