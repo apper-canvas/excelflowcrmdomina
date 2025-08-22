@@ -5,12 +5,12 @@ import NavigationItem from "@/components/molecules/NavigationItem";
 import ApperIcon from "@/components/ApperIcon";
 
 const Sidebar = ({ isOpen, onClose, className }) => {
-  const navigationItems = [
+const navigationItems = [
     { to: "/contacts", icon: "Users", label: "Contacts" },
     { to: "/deals", icon: "TrendingUp", label: "Deals" },
     { to: "/companies", icon: "Building2", label: "Companies" },
     { to: "/tasks", icon: "CheckSquare", label: "Tasks" },
-    { to: "/reports", icon: "BarChart3", label: "Reports" }
+    { to: "/reports", icon: "BarChart3", label: "Dashboard" }
   ];
 
   return (
