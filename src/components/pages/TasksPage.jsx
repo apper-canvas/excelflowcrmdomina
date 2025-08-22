@@ -450,6 +450,7 @@ return { total, completed, pending, overdue };
         onTaskClick={handleTaskClick}
         onStatusChange={handleStatusChange}
         onDeleteTask={handleDeleteTask}
+        onEditTask={handleEditTask}
         selectedTaskId={selectedTaskId}
         onSort={handleSort}
         sortField={sortField}

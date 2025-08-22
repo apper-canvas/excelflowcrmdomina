@@ -10,6 +10,7 @@ const TaskTable = ({
   onTaskClick, 
   onStatusChange, 
   onDeleteTask, 
+  onEditTask,
   selectedTaskId, 
   onSort, 
   sortField, 
@@ -184,8 +185,15 @@ const TaskTable = ({
                             {!task.contactId && !task.dealId && <span className="text-gray-400 text-xs">No relationships</span>}
                         </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
+<td className="px-6 py-4 whitespace-nowrap text-right">
                         <div className="flex items-center justify-end space-x-2">
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => onEditTask(task)}
+                                className="text-gray-600 hover:text-gray-700 hover:bg-gray-50">
+                                <ApperIcon name="Edit" className="h-4 w-4" />
+                            </Button>
                             {task.status === "pending" ? <Button
                                 size="sm"
                                 variant="ghost"

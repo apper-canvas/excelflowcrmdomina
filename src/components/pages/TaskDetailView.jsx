@@ -8,6 +8,7 @@ import SearchInput from "@/components/atoms/SearchInput";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Pagination from "@/components/organisms/Pagination";
+import TaskModal from "@/components/organisms/TaskModal";
 import { taskService } from "@/services/api/taskService";
 import { cn } from "@/utils/cn";
 
@@ -20,9 +21,10 @@ const TaskDetailView = () => {
   const [sortBy, setSortBy] = useState('dueDate');
   const [sortOrder, setSortOrder] = useState('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [showTaskModal, setShowTaskModal] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
   const itemsPerPage = 10;
 
   const statuses = ['pending', 'in_progress', 'completed'];
@@ -123,6 +125,24 @@ const TaskDetailView = () => {
       setSortOrder('asc');
     }
     setCurrentPage(1);
+};
+
+  const handleEditTask = (task) => {
+    setEditingTask(task);
+    setShowTaskModal(true);
+  };
+
+  const handleTaskSubmit = async (taskData) => {
+    try {
+      const updatedTask = await taskService.update(editingTask.Id, taskData);
+      setTasks(prev => prev.map(t => t.Id === editingTask.Id ? updatedTask : t));
+      toast.success("Task updated successfully!");
+      setShowTaskModal(false);
+      setEditingTask(null);
+    } catch (error) {
+      toast.error("Failed to save task. Please try again.");
+      throw error;
+    }
   };
 
   const getSortIcon = (column) => {
@@ -314,8 +334,11 @@ const TaskDetailView = () => {
                     <ApperIcon name={getSortIcon('createdAt')} className="h-3 w-3" />
                   </div>
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Alerts
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -372,7 +395,17 @@ const TaskDetailView = () => {
                           <ApperIcon name="CheckCircle" className="h-4 w-4" />
                         </div>
                       )}
-                    </div>
+</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleEditTask(task)}
+                      className="text-gray-600 hover:text-gray-700 hover:bg-gray-50"
+                    >
+                      <ApperIcon name="Edit" className="h-4 w-4" />
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -398,6 +431,16 @@ const TaskDetailView = () => {
           <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks found</h3>
           <p className="text-gray-600">Try adjusting your search terms or filters.</p>
         </div>
+)}
+
+      {/* Task Modal */}
+      {showTaskModal && (
+        <TaskModal
+          isOpen={showTaskModal}
+          onClose={() => setShowTaskModal(false)}
+          onSubmit={handleTaskSubmit}
+          task={editingTask}
+        />
       )}
     </div>
   );
