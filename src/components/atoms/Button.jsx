@@ -11,11 +11,12 @@ const Button = React.forwardRef(({
 }, ref) => {
   const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
   
-  const variants = {
+const variants = {
     primary: "bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500",
     secondary: "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 focus:ring-primary-500",
     accent: "bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500",
-    ghost: "text-gray-600 hover:bg-gray-100 focus:ring-gray-500"
+    ghost: "text-gray-600 hover:bg-gray-100 focus:ring-gray-500",
+    danger: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500"
   };
   
   const sizes = {
