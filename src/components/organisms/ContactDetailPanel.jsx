@@ -7,11 +7,14 @@ import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 import ActivityTimeline from "@/components/molecules/ActivityTimeline";
 import FormField from "@/components/molecules/FormField";
+import MessageModal from "@/components/molecules/MessageModal";
 import { contactService } from "@/services/api/contactService";
+
 const ContactDetailPanel = ({ contact, isOpen, onClose, onContactUpdated, className }) => {
-  const [isEditing, setIsEditing] = useState(false);
+const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [messageModalOpen, setMessageModalOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -115,7 +118,17 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, onContactUpdated, classN
       toast.error("Failed to delete contact. Please try again.");
     } finally {
       setIsDeleting(false);
-    }
+}
+  };
+
+  const handleSendMessage = () => {
+    setMessageModalOpen(true);
+  };
+
+  const handleMessageSent = (newActivity) => {
+    // Force ActivityTimeline to refresh by triggering a re-render
+    // The ActivityTimeline component will automatically fetch new activities
+    console.log('Message sent, activity logged:', newActivity);
   };
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
@@ -264,7 +277,7 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, onContactUpdated, classN
                       <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                       Edit Contact
                     </Button>
-                    <Button variant="secondary" className="flex-1 min-w-0">
+<Button variant="secondary" className="flex-1 min-w-0" onClick={handleSendMessage}>
                       <ApperIcon name="MessageCircle" className="h-4 w-4 mr-2" />
                       Send Message
                     </Button>
@@ -339,7 +352,15 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, onContactUpdated, classN
               </div>
             </motion.div>
           </motion.div>
-        )}
+)}
+
+        {/* Message Modal */}
+        <MessageModal
+          isOpen={messageModalOpen}
+          onClose={() => setMessageModalOpen(false)}
+          contact={contact}
+          onMessageSent={handleMessageSent}
+        />
       </motion.div>
     </div>
   );
