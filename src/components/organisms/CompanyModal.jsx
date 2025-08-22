@@ -120,12 +120,13 @@ return (
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className={cn(
-          "relative bg-white rounded-lg shadow-xl w-full max-w-lg",
+className={cn(
+          "relative bg-white rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col",
           className
         )}
       >
-<div className="flex items-center justify-between p-6 border-b border-gray-200">
+        {/* Header - Fixed */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
           <h2 className="text-xl font-semibold text-gray-900">
             {company ? "Edit Company" : "Add New Company"}
           </h2>
@@ -134,7 +135,9 @@ return (
           </Button>
         </div>
         
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        {/* Scrollable Form Content */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <FormField
             label="Company Name"
             required
@@ -227,8 +230,9 @@ return (
                 </>
               )}
             </Button>
-          </div>
-        </form>
+</div>
+          </form>
+        </div>
       </motion.div>
     </div>
   );

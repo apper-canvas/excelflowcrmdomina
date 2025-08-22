@@ -43,21 +43,23 @@ return (
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+transition={{ type: "spring", damping: 20, stiffness: 300 }}
             className={cn(
-              "relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden",
+              "relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col",
               className
             )}
           >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900">Company Details</h2>
-                <Button variant="ghost" size="sm" onClick={onClose}>
-                  <ApperIcon name="X" className="h-5 w-5" />
-                </Button>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto p-6">
+{/* Header - Fixed */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
+              <h2 className="text-lg font-semibold text-gray-900">Company Details</h2>
+              <Button variant="ghost" size="sm" onClick={onClose}>
+                <ApperIcon name="X" className="h-5 w-5" />
+              </Button>
+            </div>
+            
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+              <div className="p-6">
                 <div className="space-y-6">
                   {/* Company Header */}
                   <div className="text-center">
@@ -217,7 +219,7 @@ return (
                       Add Contact
                     </Button>
                   </div>
-                </div>
+</div>
               </div>
             </div>
           </motion.div>
