@@ -5,12 +5,12 @@ import { cn } from "@/utils/cn";
 import DealCard from "@/components/molecules/DealCard";
 
 const KanbanColumn = ({ 
-  stage, 
-  title, 
-  deals, 
-  totalValue,
+  stage = "", 
+  title = "", 
+  deals = [], 
+  totalValue = 0,
   isDragOver = false,
-  renderDeal
+  renderDeal = null
 }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
