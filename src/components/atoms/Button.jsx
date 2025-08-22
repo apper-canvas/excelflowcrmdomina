@@ -25,7 +25,7 @@ const variants = {
     lg: "px-6 py-3 text-base"
   };
   
-  return (
+return (
     <button
       ref={ref}
       className={cn(
@@ -35,7 +35,7 @@ const variants = {
         className
       )}
       disabled={disabled}
-{...props}
+      {...props}
     >
       {children}
     </button>

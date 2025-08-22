@@ -79,15 +79,15 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-gray-600 bg-opacity-75"
-        onClick={handleClose}
-      />
+return (
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-gray-600 bg-opacity-75"
+      onClick={handleClose}
+    />
       
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
