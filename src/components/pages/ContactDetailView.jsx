@@ -341,10 +341,12 @@ const ContactDetailView = () => {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="border-t border-gray-200 px-6 py-4">
-            <Pagination
+<Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={setCurrentPage}
+              totalItems={sortedContacts.length}
+              itemsPerPage={itemsPerPage}
             />
           </div>
         )}

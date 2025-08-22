@@ -4,21 +4,31 @@ import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
 const Pagination = ({ 
-  currentPage, 
-  totalPages, 
+  currentPage = 1, 
+  totalPages = 1, 
   onPageChange, 
-  totalItems,
-  itemsPerPage,
+  totalItems = 0,
+  itemsPerPage = 10,
   className 
 }) => {
-  const startItem = (currentPage - 1) * itemsPerPage + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
-
-  const getPageNumbers = () => {
+  // Validate required props and ensure numeric values
+  const safeCurrentPage = Number(currentPage) || 1;
+  const safeTotalPages = Number(totalPages) || 1;
+  const safeTotalItems = Number(totalItems) || 0;
+  const safeItemsPerPage = Number(itemsPerPage) || 10;
+  
+  // Early return if essential props are missing or invalid
+  if (!onPageChange || safeTotalPages <= 0 || safeItemsPerPage <= 0) {
+    return null;
+  }
+  
+  const startItem = Math.max(1, (safeCurrentPage - 1) * safeItemsPerPage + 1);
+  const endItem = Math.min(safeCurrentPage * safeItemsPerPage, safeTotalItems);
+const getPageNumbers = () => {
     const pages = [];
     const showPages = 5;
-    let start = Math.max(1, currentPage - Math.floor(showPages / 2));
-    let end = Math.min(totalPages, start + showPages - 1);
+    let start = Math.max(1, safeCurrentPage - Math.floor(showPages / 2));
+    let end = Math.min(safeTotalPages, start + showPages - 1);
     
     if (end - start + 1 < showPages) {
       start = Math.max(1, end - showPages + 1);
@@ -31,8 +41,7 @@ const Pagination = ({
     return pages;
   };
 
-  if (totalPages <= 1) return null;
-
+  if (safeTotalPages <= 1) return null;
   return (
     <div className={cn(
       "flex items-center justify-between bg-white px-4 py-3 border-t border-gray-200",
@@ -40,19 +49,19 @@ const Pagination = ({
     )}>
       <div className="flex-1 flex justify-between items-center">
         <div>
-          <p className="text-sm text-gray-700">
+<p className="text-sm text-gray-700">
             Showing <span className="font-medium">{startItem}</span> to{" "}
             <span className="font-medium">{endItem}</span> of{" "}
-            <span className="font-medium">{totalItems}</span> results
+            <span className="font-medium">{safeTotalItems}</span> results
           </p>
         </div>
         
         <div className="flex items-center space-x-2">
-          <Button
+<Button
             variant="secondary"
             size="sm"
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            onClick={() => onPageChange(Math.max(1, safeCurrentPage - 1))}
+            disabled={safeCurrentPage === 1}
           >
             <ApperIcon name="ChevronLeft" className="h-4 w-4" />
             Previous
@@ -62,7 +71,7 @@ const Pagination = ({
             {getPageNumbers().map((page) => (
               <Button
                 key={page}
-                variant={page === currentPage ? "primary" : "ghost"}
+                variant={page === safeCurrentPage ? "primary" : "ghost"}
                 size="sm"
                 onClick={() => onPageChange(page)}
                 className="min-w-[36px]"
@@ -75,8 +84,8 @@ const Pagination = ({
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(Math.min(safeTotalPages, safeCurrentPage + 1))}
+            disabled={safeCurrentPage === safeTotalPages}
           >
             Next
             <ApperIcon name="ChevronRight" className="h-4 w-4" />
