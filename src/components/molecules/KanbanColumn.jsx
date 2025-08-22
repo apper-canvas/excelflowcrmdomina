@@ -79,9 +79,9 @@ const KanbanColumn = ({
             className={cn(
               "flex-1 p-4 space-y-3 min-h-[400px] transition-colors duration-200",
               snapshot.isDraggingOver && "bg-primary-25"
-            )}
+)}
           >
-{deals.map((deal, index) => 
+            {deals.map((deal, index) => 
               renderDeal ? renderDeal(deal, index) : (
                 <motion.div
                   key={deal.Id}
