@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { cn } from "@/utils/cn";
+import { companyService } from "@/services/api/companyService";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
-import ApperIcon from "@/components/ApperIcon";
-import { companyService } from "@/services/api/companyService";
+import { cn } from "@/utils/cn";
 const ContactModal = ({ isOpen, onClose, onSave, className }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -253,7 +253,7 @@ return (
                   <ApperIcon name="Loader2" className="h-4 w-4 mr-2 animate-spin" />
                   Adding...
                 </>
-              ) : (
+) : (
                 <>
                   <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
                   Add Contact

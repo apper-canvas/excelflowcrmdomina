@@ -50,9 +50,9 @@ class ContactService {
       throw new Error("Contact not found");
     }
     
-    this.contacts[index] = {
+this.contacts[index] = {
       ...this.contacts[index],
-...updateData,
+      ...updateData,
       updatedAt: new Date().toISOString()
     };
     
