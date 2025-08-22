@@ -7,6 +7,10 @@ import DealsPage from "@/components/pages/DealsPage";
 import CompaniesPage from "@/components/pages/CompaniesPage";
 import TasksPage from "@/components/pages/TasksPage";
 import ReportsPage from "@/components/pages/ReportsPage";
+import ContactDetailView from "@/components/pages/ContactDetailView";
+import DealDetailView from "@/components/pages/DealDetailView";
+import TaskDetailView from "@/components/pages/TaskDetailView";
+import ActivityDetailView from "@/components/pages/ActivityDetailView";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -53,13 +57,17 @@ function App() {
       <BrowserRouter>
       <div className="min-h-screen bg-gray-50">
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Navigate to="/contacts" replace />} />
+<Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="/reports" replace />} />
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="deals" element={<DealsPage />} />
             <Route path="companies" element={<CompaniesPage />} />
             <Route path="tasks" element={<TasksPage />} />
             <Route path="reports" element={<ReportsPage />} />
+            <Route path="reports/contacts" element={<ContactDetailView />} />
+            <Route path="reports/deals" element={<DealDetailView />} />
+            <Route path="reports/tasks" element={<TaskDetailView />} />
+            <Route path="reports/activity" element={<ActivityDetailView />} />
           </Route>
         </Routes>
         

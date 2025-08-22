@@ -34,15 +34,17 @@ const DashboardWidget = ({
     return "Minus";
   };
 
-  return (
+return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 ${
-        onClick ? "cursor-pointer hover:shadow-md" : ""
+        onClick ? "cursor-pointer hover:shadow-lg transform hover:scale-[1.02]" : ""
       } ${sizeClasses[size]} ${className}`}
       onClick={onClick}
+      whileHover={onClick ? { scale: 1.02 } : {}}
+      whileTap={onClick ? { scale: 0.98 } : {}}
     >
       {loading ? (
         <div className="flex items-center justify-center h-24">

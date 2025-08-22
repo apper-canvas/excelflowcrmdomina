@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import DashboardWidget from "@/components/molecules/DashboardWidget";
@@ -10,6 +11,7 @@ import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 
 const ReportsPage = () => {
+  const navigate = useNavigate();
   const [dateRange, setDateRange] = useState('thisMonth');
   const [pipelineMetrics, setPipelineMetrics] = useState(null);
   const [performanceMetrics, setPerformanceMetrics] = useState(null);
@@ -18,7 +20,6 @@ const ReportsPage = () => {
   const [upcomingTasks, setUpcomingTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const dateRangeOptions = [
     { value: 'thisMonth', label: 'This Month' },
     { value: 'thisQuarter', label: 'This Quarter' },
@@ -139,16 +140,20 @@ const ReportsPage = () => {
 
       {/* Widget Grid - 2x3 Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Pipeline Value */}
+{/* Pipeline Value */}
         <DashboardWidget
           title="Pipeline Value"
           icon="TrendingUp"
           value={formatCurrency(pipelineMetrics?.totalPipelineValue || 0)}
           subtitle={`${pipelineMetrics?.totalDeals || 0} active deals`}
           loading={loading}
+          onClick={() => {
+            navigate('/reports/deals');
+            toast.success('Viewing detailed deal pipeline analysis');
+          }}
         />
 
-        {/* Deal Conversion Rate */}
+{/* Deal Conversion Rate */}
         <DashboardWidget
           title="Overall Conversion Rate"
           icon="Target"
@@ -157,9 +162,12 @@ const ReportsPage = () => {
           trend={pipelineMetrics?.conversionRates?.overall || 0}
           trendDirection={pipelineMetrics?.conversionRates?.overall >= 20 ? "up" : "neutral"}
           loading={loading}
+          onClick={() => {
+            navigate('/reports/deals');
+            toast.success('Viewing detailed conversion analysis');
+          }}
         />
-
-        {/* Monthly Target Progress */}
+{/* Monthly Target Progress */}
         <DashboardWidget
           title="Monthly Target"
           icon="Flag"
@@ -168,13 +176,20 @@ const ReportsPage = () => {
           trend={performanceMetrics?.targetProgress || 0}
           trendDirection={performanceMetrics?.targetProgress >= 75 ? "up" : "neutral"}
           loading={loading}
+          onClick={() => {
+            navigate('/reports/deals');
+            toast.success('Viewing detailed target progress');
+          }}
         />
-
-        {/* Top Contacts */}
+{/* Top Contacts */}
         <DashboardWidget
           title="Top Contacts"
           icon="Users"
           loading={loading}
+          onClick={() => {
+            navigate('/reports/contacts');
+            toast.success('Viewing detailed contact analysis');
+          }}
         >
           <div className="space-y-3">
             {topContacts.slice(0, 5).map((contact, index) => (
@@ -204,14 +219,23 @@ const ReportsPage = () => {
                 No contact data available
               </p>
             )}
+            <div className="pt-2 border-t border-gray-100">
+              <div className="text-xs text-primary-600 font-medium text-center">
+                Click to view all contacts
+              </div>
+            </div>
           </div>
         </DashboardWidget>
 
-        {/* Recent Activity */}
+{/* Recent Activity */}
         <DashboardWidget
           title="Recent Activity"
           icon="Clock"
           loading={loading}
+          onClick={() => {
+            navigate('/reports/activity');
+            toast.success('Viewing detailed activity log');
+          }}
         >
           <div className="space-y-3">
             {recentActivity.slice(0, 5).map((activity) => (
@@ -237,14 +261,23 @@ const ReportsPage = () => {
                 No recent activity
               </p>
             )}
+            <div className="pt-2 border-t border-gray-100">
+              <div className="text-xs text-primary-600 font-medium text-center">
+                Click to view all activity
+              </div>
+            </div>
           </div>
         </DashboardWidget>
 
-        {/* Upcoming Tasks */}
+{/* Upcoming Tasks */}
         <DashboardWidget
           title="Upcoming Tasks"
           icon="CheckSquare"
           loading={loading}
+          onClick={() => {
+            navigate('/reports/tasks');
+            toast.success('Viewing detailed task analysis');
+          }}
         >
           <div className="space-y-3">
             {upcomingTasks.slice(0, 5).map((task) => (
@@ -273,6 +306,11 @@ const ReportsPage = () => {
                 No upcoming tasks
               </p>
             )}
+            <div className="pt-2 border-t border-gray-100">
+              <div className="text-xs text-primary-600 font-medium text-center">
+                Click to view all tasks
+              </div>
+            </div>
           </div>
         </DashboardWidget>
       </div>
