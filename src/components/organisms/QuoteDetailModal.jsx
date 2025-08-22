@@ -94,9 +94,9 @@ const QuoteDetailModal = ({
             <Button variant="ghost" size="sm" onClick={onClose}>
               <ApperIcon name="X" className="h-5 w-5" />
             </Button>
-          </div>
+</div>
           
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto scrollbar-thin p-6">
             <div className="space-y-6">
               {/* Quote Header */}
               <div className="text-center">
