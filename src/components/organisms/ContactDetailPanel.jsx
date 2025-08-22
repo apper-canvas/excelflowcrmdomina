@@ -7,23 +7,30 @@ import ApperIcon from "@/components/ApperIcon";
 import ActivityTimeline from "@/components/molecules/ActivityTimeline";
 
 const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
-  if (!contact) return null;
+  if (!contact || !isOpen) return null;
 
   return (
-    <>
-      {/* Desktop Panel */}
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: isOpen ? 0 : "100%" }}
-        transition={{ type: "spring", damping: 20, stiffness: 100 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-gray-600 bg-opacity-75"
+        onClick={onClose}
+      />
+      
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
         className={cn(
-          "hidden lg:block fixed top-0 right-0 h-full w-96 bg-white border-l border-gray-200 shadow-xl z-40",
+          "relative bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden",
           className
         )}
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Contact Details</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Contact Details</h2>
             <Button variant="ghost" size="sm" onClick={onClose}>
               <ApperIcon name="X" className="h-5 w-5" />
             </Button>
@@ -33,35 +40,35 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
             <div className="space-y-6">
               {/* Contact Avatar and Name */}
               <div className="text-center">
-                <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center">
-                  <span className="text-white font-bold text-2xl">
+                <div className="mx-auto h-24 w-24 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-3xl">
                     {contact.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
-                <h3 className="mt-4 text-xl font-semibold text-gray-900">{contact.name}</h3>
-                <p className="text-sm text-gray-600">{contact.company}</p>
+                <h3 className="mt-4 text-2xl font-semibold text-gray-900">{contact.name}</h3>
+                <p className="text-base text-gray-600">{contact.company}</p>
               </div>
 
-              {/* Contact Information */}
-              <div className="space-y-4">
+              {/* Contact Information Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg">
                     <ApperIcon name="Mail" className="h-4 w-4 text-gray-400 mr-3" />
-                    <span className="text-sm text-gray-900">{contact.email}</span>
+                    <span className="text-sm text-gray-900 break-all">{contact.email}</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg">
                     <ApperIcon name="Phone" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">{contact.phone}</span>
                   </div>
-</div>
+                </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
                     <ApperIcon name="Building2" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">{contact.company}</span>
@@ -69,7 +76,7 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Last Contact</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Contact</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg">
                     <ApperIcon name="Calendar" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">
@@ -78,8 +85,8 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Created</label>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Created</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg">
                     <ApperIcon name="Clock" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">
@@ -90,116 +97,30 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3">
-                <Button className="w-full" variant="primary">
+              <div className="flex flex-wrap gap-3">
+                <Button variant="primary" className="flex-1 min-w-0">
                   <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                   Edit Contact
                 </Button>
-                <Button className="w-full" variant="secondary">
+                <Button variant="secondary" className="flex-1 min-w-0">
                   <ApperIcon name="MessageCircle" className="h-4 w-4 mr-2" />
                   Send Message
                 </Button>
-<Button className="w-full" variant="ghost">
+                <Button variant="ghost" className="flex-1 min-w-0">
                   <ApperIcon name="Trash2" className="h-4 w-4 mr-2" />
                   Delete Contact
                 </Button>
               </div>
 
               {/* Activity Timeline */}
-              <ActivityTimeline contactId={contact.Id} className="border-t border-gray-200 pt-6" />
+              <div className="border-t border-gray-200 pt-6">
+                <ActivityTimeline contactId={contact.Id} />
+              </div>
             </div>
           </div>
         </div>
       </motion.div>
-
-      {/* Mobile Panel */}
-      {isOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-gray-600 bg-opacity-75"
-            onClick={onClose}
-          />
-          
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 20, stiffness: 100 }}
-            className="ml-auto relative max-w-xs w-full bg-white shadow-xl"
-          >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900">Contact Details</h2>
-                <Button variant="ghost" size="sm" onClick={onClose}>
-                  <ApperIcon name="X" className="h-5 w-5" />
-                </Button>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto p-4">
-                <div className="space-y-6">
-                  {/* Contact Avatar and Name */}
-                  <div className="text-center">
-                    <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center">
-                      <span className="text-white font-bold text-xl">
-                        {contact.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-semibold text-gray-900">{contact.name}</h3>
-                    <p className="text-sm text-gray-600">{contact.company}</p>
-                  </div>
-
-                  {/* Contact Information */}
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                      <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-                        <ApperIcon name="Mail" className="h-4 w-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">{contact.email}</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                      <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-                        <ApperIcon name="Phone" className="h-4 w-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">{contact.phone}</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Last Contact</label>
-                      <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-                        <ApperIcon name="Calendar" className="h-4 w-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">
-                          {contact.lastContactDate ? format(new Date(contact.lastContactDate), "MMM d, yyyy") : "Never"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="space-y-2">
-                    <Button className="w-full" variant="primary" size="sm">
-                      <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
-                      Edit
-</Button>
-                    <Button className="w-full" variant="secondary" size="sm">
-                      <ApperIcon name="MessageCircle" className="h-4 w-4 mr-2" />
-                      Message
-                    </Button>
-                  </div>
-                  {/* Activity Timeline */}
-                  <ActivityTimeline contactId={contact.Id} className="border-t border-gray-200 pt-4" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
-    </>
+    </div>
   );
 };
 
