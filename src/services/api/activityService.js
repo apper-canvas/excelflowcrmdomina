@@ -21,14 +21,14 @@ class ActivityService {
     return { ...activity };
   }
 
-  async create(activityData) {
+async create(activityData) {
     await delay(150);
     
     const newActivity = {
       Id: this.nextId++,
       ...activityData,
-      timestamp: new Date().toISOString(),
-      user: "System" // Default user for automated activities
+      timestamp: activityData.timestamp || new Date().toISOString(),
+      user: activityData.user || "Current User" // Default user for manual activities
     };
     
     this.activities.unshift(newActivity);
@@ -149,10 +149,38 @@ class ActivityService {
     if (index === -1) {
       throw new Error("Activity not found");
     }
-    
-    const deletedActivity = this.activities.splice(index, 1)[0];
+const deletedActivity = this.activities.splice(index, 1)[0];
     return { ...deletedActivity };
   }
+
+  // Manual activity logging methods
+  async createCallActivity(contactId, dealId, notes, duration) {
+    return this.create({
+      type: "call_logged",
+      contactId: contactId ? parseInt(contactId) : null,
+      dealId: dealId ? parseInt(dealId) : null,
+      description: `Call logged${duration ? ` (${duration} minutes)` : ''}`,
+      details: {
+        notes: notes || '',
+        duration: duration || 0
+      },
+      user: "Current User"
+    });
+  }
+
+  async createEmailActivity(contactId, dealId, subject, notes) {
+    return this.create({
+      type: "email_sent",
+      contactId: contactId ? parseInt(contactId) : null,
+      dealId: dealId ? parseInt(dealId) : null,
+      description: `Email sent${subject ? `: ${subject}` : ''}`,
+      details: {
+        subject: subject || '',
+        notes: notes || ''
+      },
+      user: "Current User"
+    });
+}
 }
 
 export const activityService = new ActivityService();
