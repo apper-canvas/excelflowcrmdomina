@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { cn } from "@/utils/cn";
 import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
 import ApperIcon from "@/components/ApperIcon";
-
+import { companyService } from "@/services/api/companyService";
 const ContactModal = ({ isOpen, onClose, onSave, className }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,11 +15,54 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [companies, setCompanies] = useState([]);
+  const [companySearch, setCompanySearch] = useState("");
+  const [showCompanyDropdown, setShowCompanyDropdown] = useState(false);
+  const [loadingCompanies, setLoadingCompanies] = useState(false);
 
-  const handleChange = (field, value) => {
+  useEffect(() => {
+    if (isOpen) {
+      loadCompanies();
+    }
+  }, [isOpen]);
+
+  const loadCompanies = async () => {
+    setLoadingCompanies(true);
+    try {
+      const companiesData = await companyService.getAll();
+      setCompanies(companiesData);
+    } catch (error) {
+      console.error('Failed to load companies:', error);
+    } finally {
+      setLoadingCompanies(false);
+    }
+  };
+
+  const filteredCompanies = companies.filter(company =>
+    company.name.toLowerCase().includes(companySearch.toLowerCase())
+  );
+const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleCompanySearch = (value) => {
+    setCompanySearch(value);
+    setFormData(prev => ({ ...prev, company: value }));
+    setShowCompanyDropdown(true);
+    if (errors.company) {
+      setErrors(prev => ({ ...prev, company: "" }));
+    }
+  };
+
+  const selectCompany = (company) => {
+    setFormData(prev => ({ ...prev, company: company.name }));
+    setCompanySearch(company.name);
+    setShowCompanyDropdown(false);
+    if (errors.company) {
+      setErrors(prev => ({ ...prev, company: "" }));
     }
   };
 
@@ -71,9 +114,11 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
     }
   };
 
-  const handleClose = () => {
+const handleClose = () => {
     setFormData({ name: "", email: "", phone: "", company: "" });
     setErrors({});
+    setCompanySearch("");
+    setShowCompanyDropdown(false);
     onClose();
   };
 
@@ -133,21 +178,57 @@ return (
             error={errors.phone}
             placeholder="Enter phone number"
           />
-<div className="space-y-2">
+<div className="space-y-2 relative">
             <label className="block text-sm font-medium text-gray-700">
               Company <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
-              value={formData.company}
-              onChange={(e) => handleChange("company", e.target.value)}
-              className={cn(
-                "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm",
-                "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent",
-                errors.company && "border-red-300 focus:ring-red-500"
+            <div className="relative">
+              <input
+                type="text"
+                value={companySearch}
+                onChange={(e) => handleCompanySearch(e.target.value)}
+                onFocus={() => setShowCompanyDropdown(true)}
+                className={cn(
+                  "w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm",
+                  "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent",
+                  errors.company && "border-red-300 focus:ring-red-500"
+                )}
+                placeholder="Search and select company"
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                {loadingCompanies ? (
+                  <ApperIcon name="Loader2" className="h-4 w-4 animate-spin text-gray-400" />
+                ) : (
+                  <ApperIcon name="ChevronDown" className="h-4 w-4 text-gray-400" />
+                )}
+              </div>
+              
+              {showCompanyDropdown && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-auto">
+                  {filteredCompanies.length > 0 ? (
+                    filteredCompanies.map((company) => (
+                      <button
+                        key={company.Id}
+                        type="button"
+                        className="w-full px-3 py-2 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                        onClick={() => selectCompany(company)}
+                      >
+                        <div className="font-medium text-gray-900">{company.name}</div>
+                        <div className="text-sm text-gray-500">{company.industry}</div>
+                      </button>
+                    ))
+                  ) : companySearch.trim() ? (
+                    <div className="px-3 py-2 text-sm text-gray-500">
+                      No companies found matching "{companySearch}"
+                    </div>
+                  ) : (
+                    <div className="px-3 py-2 text-sm text-gray-500">
+                      Start typing to search companies
+                    </div>
+                  )}
+                </div>
               )}
-              placeholder="Enter company name"
-            />
+            </div>
             {errors.company && (
               <p className="text-sm text-red-600">{errors.company}</p>
             )}
