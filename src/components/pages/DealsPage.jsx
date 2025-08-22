@@ -8,9 +8,15 @@ const DealsPage = () => {
   const [showDealModal, setShowDealModal] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const handleCreateDeal = async (dealData) => {
-    await dealService.create(dealData);
-    setRefreshTrigger(prev => prev + 1);
+const handleCreateDeal = async (dealData) => {
+    try {
+      await dealService.create(dealData);
+      setRefreshTrigger(prev => prev + 1);
+      setShowDealModal(false);
+    } catch (error) {
+      // Error handling is done in DealModal, just re-throw to prevent modal closing
+      throw error;
+    }
   };
 
   return (
