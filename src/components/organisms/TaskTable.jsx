@@ -149,67 +149,66 @@ const TaskTable = ({
                             <span className="text-sm text-gray-900 capitalize">{task.type}</span>
                         </div>
                     </td>
+<td className="px-6 py-4 whitespace-nowrap">
+                        <div
+                            className={cn(
+                                "text-sm",
+                                isOverdue(task.dueDate, task.status) ? "text-red-600 font-medium" : task.status === "completed" ? "text-gray-500 line-through" : "text-gray-900"
+                            )}>
+                            {format(new Date(task.dueDate), "MMM d, yyyy")}
+                            {isOverdue(task.dueDate, task.status) && <span className="ml-1 text-xs font-bold">(OVERDUE)</span>}
+                        </div>
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <div
-                                className={cn(
-                                    "text-sm",
-                                    isOverdue(task.dueDate, task.status) ? "text-red-600 font-medium" : task.status === "completed" ? "text-gray-500 line-through" : "text-gray-900"
-                                )}>
-                                {format(new Date(task.dueDate), "MMM d, yyyy")}
-                                {isOverdue(task.dueDate, task.status) && <span className="ml-1 text-xs font-bold">(OVERDUE)</span>}
-                            </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <span
-                                className={cn(
-                                    "inline-flex px-2 py-1 text-xs font-medium rounded-full capitalize",
-                                    getPriorityColor(task.priority)
-                                )}>
-                                {task.priority}
-                            </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <span
-                                className={cn(
-                                    "inline-flex px-2 py-1 text-xs font-medium rounded-full capitalize",
-                                    getStatusColor(task.status)
-                                )}>
-                                {task.status}
-                            </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                                {task.contactId && getContactName && <div className="font-medium">{getContactName(task.contactId)}</div>}
-                                {task.dealId && getDealName && <div className="text-xs text-gray-500 mt-1">{getDealName(task.dealId)}</div>}
-                                {!task.contactId && !task.dealId && <span className="text-gray-400 text-xs">No relationships</span>}
-                            </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right">
-                            <div className="flex items-center justify-end space-x-2">
-                                {task.status === "pending" ? <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => onStatusChange(task.Id, "completed")}
-                                    className="text-green-600 hover:text-green-700 hover:bg-green-50">
-                                    <ApperIcon name="Check" className="h-4 w-4" />
-                                </Button> : <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => onStatusChange(task.Id, "pending")}
-                                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
-                                    <ApperIcon name="RotateCcw" className="h-4 w-4" />
-                                </Button>}
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => onDeleteTask(task.Id)}
-                                    className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                                    <ApperIcon name="Trash2" className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        </td>
-                    </td></motion.tr>)}
+                        <span
+                            className={cn(
+                                "inline-flex px-2 py-1 text-xs font-medium rounded-full capitalize",
+                                getPriorityColor(task.priority)
+                            )}>
+                            {task.priority}
+                        </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                            className={cn(
+                                "inline-flex px-2 py-1 text-xs font-medium rounded-full capitalize",
+                                getStatusColor(task.status)
+                            )}>
+                            {task.status}
+                        </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                            {task.contactId && getContactName && <div className="font-medium">{getContactName(task.contactId)}</div>}
+                            {task.dealId && getDealName && <div className="text-xs text-gray-500 mt-1">{getDealName(task.dealId)}</div>}
+                            {!task.contactId && !task.dealId && <span className="text-gray-400 text-xs">No relationships</span>}
+                        </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end space-x-2">
+                            {task.status === "pending" ? <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => onStatusChange(task.Id, "completed")}
+                                className="text-green-600 hover:text-green-700 hover:bg-green-50">
+                                <ApperIcon name="Check" className="h-4 w-4" />
+                            </Button> : <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => onStatusChange(task.Id, "pending")}
+                                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+                                <ApperIcon name="RotateCcw" className="h-4 w-4" />
+                            </Button>}
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => onDeleteTask(task.Id)}
+                                className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                                <ApperIcon name="Trash2" className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </td>
+                </motion.tr>)}
             </tbody>
         </table>
     </div>
