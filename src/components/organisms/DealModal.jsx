@@ -11,8 +11,9 @@ import { contactService } from "@/services/api/contactService";
 import { companyService } from "@/services/api/companyService";
 
 const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     company: "",
+    contactId: "",
     contactName: "",
     dealValue: "",
     stage: "Lead",
@@ -31,8 +32,9 @@ const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
     if (isOpen) {
       loadData();
       if (deal) {
-        setFormData({
+setFormData({
           company: deal.company || "",
+          contactId: deal.contactId || "",
           contactName: deal.contactName || "",
           dealValue: deal.dealValue?.toString() || "",
           stage: deal.stage || "Lead",
@@ -40,8 +42,9 @@ const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
           description: deal.description || ""
         });
       } else {
-        setFormData({
+setFormData({
           company: "",
+          contactId: "",
           contactName: "",
           dealValue: "",
           stage: "Lead",
@@ -99,9 +102,11 @@ const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
     setLoading(true);
     
     try {
+const selectedContact = contacts.find(c => c.Id === parseInt(formData.contactId));
       const dealData = {
         company: formData.company.trim(),
-        contactName: formData.contactName.trim() || "N/A",
+        contactId: formData.contactId ? parseInt(formData.contactId) : null,
+        contactName: selectedContact ? selectedContact.name : "N/A",
         dealValue: parseFloat(formData.dealValue),
         stage: formData.stage,
         expectedCloseDate: formData.expectedCloseDate,
@@ -127,8 +132,9 @@ const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
   };
 
   const handleClose = () => {
-    setFormData({
+setFormData({
       company: "",
+      contactId: "",
       contactName: "",
       dealValue: "",
       stage: "Lead",
@@ -198,16 +204,16 @@ const DealModal = ({ isOpen, onClose, onSubmit, deal = null }) => {
                 )}
               </div>
 
-              <div className="space-y-2">
+<div className="space-y-2">
                 <Label>Contact</Label>
                 <select
-                  value={formData.contactName}
-                  onChange={(e) => handleChange("contactName", e.target.value)}
+                  value={formData.contactId}
+                  onChange={(e) => handleChange("contactId", e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Select a contact (optional)</option>
                   {contacts.map(contact => (
-                    <option key={contact.Id} value={contact.name}>
+                    <option key={contact.Id} value={contact.Id}>
                       {contact.name} - {contact.company}
                     </option>
                   ))}

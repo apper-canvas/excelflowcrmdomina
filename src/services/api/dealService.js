@@ -30,9 +30,10 @@ class DealService {
       ? Math.max(...this.deals.map(d => d.Id)) 
       : 0;
     
-    const newDeal = {
+const newDeal = {
       Id: maxId + 1,
       ...dealData,
+      contactId: dealData.contactId || null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -49,9 +50,10 @@ class DealService {
       throw new Error("Deal not found");
     }
     
-    this.deals[index] = {
+this.deals[index] = {
       ...this.deals[index],
       ...updateData,
+      contactId: updateData.contactId !== undefined ? updateData.contactId : this.deals[index].contactId,
       updatedAt: new Date().toISOString()
     };
     
