@@ -1,4 +1,5 @@
 import contactsData from "@/services/mockData/contacts.json";
+import { activityService } from "@/services/api/activityService";
 
 // Simulate network delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -51,9 +52,20 @@ class ContactService {
     
     this.contacts[index] = {
       ...this.contacts[index],
-      ...updateData,
+...updateData,
       updatedAt: new Date().toISOString()
     };
+    
+    // Generate activity for contact update
+    const contact = this.contacts[index];
+    const changesList = Object.keys(updateData).filter(key => key !== 'updatedAt');
+    if (changesList.length > 0) {
+      activityService.createContactUpdatedActivity(
+        contact.Id,
+        contact.name,
+        changesList
+      ).catch(console.error); // Don't block on activity creation failure
+    }
     
     return { ...this.contacts[index] };
   }

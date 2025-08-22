@@ -1,5 +1,6 @@
 import tasksData from "@/services/mockData/tasks.json";
 import { toast } from "react-toastify";
+import { activityService } from "@/services/api/activityService";
 
 // Simulate network delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -80,7 +81,19 @@ async updateStatus(id, newStatus) {
     this.tasks[index] = {
       ...this.tasks[index],
       ...updateData
-    };
+};
+    
+    // Generate activity for task completion
+    if (newStatus === "completed") {
+      const task = this.tasks[index];
+      activityService.createTaskCompletedActivity(
+        task.Id,
+        task.contactId,
+        task.dealId,
+        task.title,
+        task.type
+      ).catch(console.error); // Don't block on activity creation failure
+    }
     
     toast.success(`Task marked as ${newStatus}`);
     return { ...this.tasks[index] };

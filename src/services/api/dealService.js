@@ -1,5 +1,6 @@
 import dealsData from "@/services/mockData/deals.json";
 import { toast } from "react-toastify";
+import { activityService } from "@/services/api/activityService";
 
 // Simulate network delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -73,7 +74,17 @@ this.deals[index] = {
       ...this.deals[index],
       stage: newStage,
       updatedAt: new Date().toISOString()
-    };
+};
+    
+    // Generate activity for deal stage change
+    const deal = this.deals[index];
+    activityService.createDealStageActivity(
+      deal.Id,
+      deal.contactId,
+      oldStage,
+      newStage,
+      deal.company || deal.contactName
+    ).catch(console.error); // Don't block on activity creation failure
     
     toast.success(`Deal moved from ${oldStage} to ${newStage}`);
     return { ...this.deals[index] };

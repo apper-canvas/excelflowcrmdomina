@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { cn } from "@/utils/cn";
+import DealDetailPanel from "@/components/organisms/DealDetailPanel";
 import ApperIcon from "@/components/ApperIcon";
+import { cn } from "@/utils/cn";
 
 const DealCard = ({ deal, isDragging = false, ...props }) => {
+  const [detailPanelOpen, setDetailPanelOpen] = useState(false);
+
+  const handleCardClick = (e) => {
+    // Prevent opening detail panel during drag
+    if (!isDragging) {
+      setDetailPanelOpen(true);
+    }
+  };
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -30,20 +39,22 @@ const DealCard = ({ deal, isDragging = false, ...props }) => {
       'Closed Won': 'bg-green-100 text-green-800'
     };
     return colors[stage] || 'bg-gray-100 text-gray-800';
-  };
+return colors[stage] || 'bg-gray-100 text-gray-800';
+};
 
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className={cn(
-        "bg-white rounded-lg border border-gray-200 p-4 cursor-move hover:shadow-md transition-all duration-200",
-        isDragging && "shadow-lg rotate-2 scale-105"
-      )}
-      {...props}
-    >
+return (
+  <>
+        layout
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        className={cn(
+          "bg-white rounded-lg border border-gray-200 p-4 cursor-move hover:shadow-md transition-all duration-200",
+          isDragging && "shadow-lg rotate-2 scale-105"
+        )}
+        onClick={handleCardClick}
+        {...props}
+      >
       <div className="space-y-3">
         {/* Header */}
         <div className="flex items-start justify-between">
@@ -84,11 +95,19 @@ const DealCard = ({ deal, isDragging = false, ...props }) => {
         {deal.description && (
           <p className="text-xs text-gray-500 line-clamp-2">
             {deal.description}
-          </p>
-)}
-      </div>
-    </motion.div>
-  );
+{deal.description}
+        </p>
+      )}
+    </div>
+  </motion.div>
+
+      {/* Deal Detail Panel */}
+      <DealDetailPanel
+        deal={deal}
+        isOpen={detailPanelOpen}
+        onClose={() => setDetailPanelOpen(false)}
+      />
+    </>
 };
 
 export default DealCard;
