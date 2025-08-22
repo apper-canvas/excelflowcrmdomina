@@ -7,6 +7,7 @@ import DealsPage from "@/components/pages/DealsPage";
 import CompaniesPage from "@/components/pages/CompaniesPage";
 import TasksPage from "@/components/pages/TasksPage";
 import ReportsPage from "@/components/pages/ReportsPage";
+import QuotesPage from "@/components/pages/QuotesPage";
 import ContactDetailView from "@/components/pages/ContactDetailView";
 import DealDetailView from "@/components/pages/DealDetailView";
 import TaskDetailView from "@/components/pages/TaskDetailView";
@@ -61,11 +62,12 @@ function App() {
             <Route index element={<Navigate to="/reports" replace />} />
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="deals" element={<DealsPage />} />
-            <Route path="companies" element={<CompaniesPage />} />
-            <Route path="tasks" element={<TasksPage />} />
-            <Route path="reports" element={<ReportsPage />} />
-            <Route path="reports/contacts" element={<ContactDetailView />} />
-            <Route path="reports/deals" element={<DealDetailView />} />
+<Route path="companies" element={<CompaniesPage />} />
+<Route path="tasks" element={<TasksPage />} />
+<Route path="quotes" element={<QuotesPage />} />
+<Route path="reports" element={<ReportsPage />} />
+<Route path="reports/contacts" element={<ContactDetailView />} />
+<Route path="reports/deals" element={<DealDetailView />} />
             <Route path="reports/tasks" element={<TaskDetailView />} />
             <Route path="reports/activity" element={<ActivityDetailView />} />
           </Route>
