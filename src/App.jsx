@@ -72,8 +72,7 @@ function App() {
             <Route path="reports/activity" element={<ActivityDetailView />} />
           </Route>
         </Routes>
-        
-        <ToastContainer
+<ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -84,7 +83,7 @@ function App() {
           draggable
           pauseOnHover
           className="toast-container"
-          style={{ zIndex: 9999 }}
+          style={{ zIndex: 10002 }}
         />
       </div>
 </BrowserRouter>

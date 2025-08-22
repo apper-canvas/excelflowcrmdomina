@@ -100,11 +100,12 @@ return colors[stage] || 'bg-gray-100 text-gray-800';
         </div>
       </motion.div>
 
-      {/* Deal Detail Panel */}
+{/* Deal Detail Panel */}
       <DealDetailPanel
         deal={deal}
         isOpen={detailPanelOpen}
         onClose={() => setDetailPanelOpen(false)}
+        centered={true}
       />
     </>
   );
