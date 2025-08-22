@@ -85,7 +85,7 @@ const DealCard = ({ deal, isDragging = false, ...props }) => {
           <p className="text-xs text-gray-500 line-clamp-2">
             {deal.description}
           </p>
-        )}
+)}
       </div>
     </motion.div>
   );

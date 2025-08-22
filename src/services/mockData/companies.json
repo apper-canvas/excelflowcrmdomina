@@ -1,0 +1,252 @@
+[
+  {
+    "Id": 1,
+    "name": "Acme Corporation",
+    "industry": "Manufacturing",
+    "website": "https://www.acmecorp.com",
+    "address": "123 Business Ave, New York, NY 10001",
+    "notes": "Leading manufacturer of industrial equipment and solutions.",
+    "createdAt": "2023-06-15T10:00:00.000Z",
+    "updatedAt": "2023-12-01T15:30:00.000Z"
+  },
+  {
+    "Id": 2,
+    "name": "TechStart Solutions",
+    "industry": "Technology",
+    "website": "https://www.techstart.io",
+    "address": "456 Innovation Dr, San Francisco, CA 94105",
+    "notes": "Emerging technology startup focused on AI and machine learning solutions.",
+    "createdAt": "2023-07-20T14:15:00.000Z",
+    "updatedAt": "2023-11-15T09:45:00.000Z"
+  },
+  {
+    "Id": 3,
+    "name": "Global Industries Inc",
+    "industry": "Logistics",
+    "website": "https://www.globalinc.com",
+    "address": "789 Commerce Blvd, Chicago, IL 60601",
+    "notes": "Multinational logistics and supply chain management company.",
+    "createdAt": "2023-05-10T11:20:00.000Z",
+    "updatedAt": "2023-11-20T16:10:00.000Z"
+  },
+  {
+    "Id": 4,
+    "name": "InnovateTech",
+    "industry": "Technology",
+    "website": "https://www.innovatetech.com",
+    "address": "321 Tech Park, Austin, TX 78701",
+    "notes": "Software development and IT consulting services provider.",
+    "createdAt": "2023-08-05T13:45:00.000Z",
+    "updatedAt": "2023-10-05T12:30:00.000Z"
+  },
+  {
+    "Id": 5,
+    "name": "DataFlow Systems",
+    "industry": "Data Analytics",
+    "website": "https://www.dataflow.com",
+    "address": "654 Analytics Way, Seattle, WA 98101",
+    "notes": "Specializes in big data processing and analytics platforms.",
+    "createdAt": "2023-09-12T08:30:00.000Z",
+    "updatedAt": "2023-12-10T14:20:00.000Z"
+  },
+  {
+    "Id": 6,
+    "name": "CloudTech Networks",
+    "industry": "Cloud Services",
+    "website": "https://www.cloudtech.net",
+    "address": "987 Cloud St, Denver, CO 80201",
+    "notes": "Cloud infrastructure and network solutions provider.",
+    "createdAt": "2023-04-18T16:00:00.000Z",
+    "updatedAt": "2023-09-22T11:15:00.000Z"
+  },
+  {
+    "Id": 7,
+    "name": "Digital Solutions Ltd",
+    "industry": "Marketing",
+    "website": "https://www.digitalsol.com",
+    "address": "147 Marketing Plaza, Miami, FL 33101",
+    "notes": "Full-service digital marketing and advertising agency.",
+    "createdAt": "2023-06-30T10:45:00.000Z",
+    "updatedAt": "2023-11-08T13:55:00.000Z"
+  },
+  {
+    "Id": 8,
+    "name": "Nexus Group",
+    "industry": "Consulting",
+    "website": "https://www.nexusgroup.com",
+    "address": "258 Consultant Rd, Boston, MA 02101",
+    "notes": "Strategic business consulting and management advisory services.",
+    "createdAt": "2023-07-14T09:20:00.000Z",
+    "updatedAt": "2023-10-18T15:40:00.000Z"
+  },
+  {
+    "Id": 9,
+    "name": "SmartBiz Solutions",
+    "industry": "Software",
+    "website": "https://www.smartbiz.com",
+    "address": "369 Software Ave, Portland, OR 97201",
+    "notes": "Business automation and workflow optimization software.",
+    "createdAt": "2023-08-25T12:10:00.000Z",
+    "updatedAt": "2023-11-30T10:25:00.000Z"
+  },
+  {
+    "Id": 10,
+    "name": "FutureTech Labs",
+    "industry": "Research",
+    "website": "https://www.futuretech.io",
+    "address": "741 Research Pkwy, Atlanta, GA 30301",
+    "notes": "Advanced technology research and development laboratory.",
+    "createdAt": "2023-05-28T14:35:00.000Z",
+    "updatedAt": "2023-09-15T16:50:00.000Z"
+  },
+  {
+    "Id": 11,
+    "name": "Vertex Technologies",
+    "industry": "Technology",
+    "website": "https://www.vertex.com",
+    "address": "852 Vertex Dr, Phoenix, AZ 85001",
+    "notes": "Enterprise technology solutions and system integration.",
+    "createdAt": "2023-09-05T11:25:00.000Z",
+    "updatedAt": "2023-10-25T14:15:00.000Z"
+  },
+  {
+    "Id": 12,
+    "name": "PrimeTech Industries",
+    "industry": "Manufacturing",
+    "website": "https://www.primetech.net",
+    "address": "963 Prime Blvd, Detroit, MI 48201",
+    "notes": "High-tech manufacturing and precision engineering services.",
+    "createdAt": "2023-07-08T13:40:00.000Z",
+    "updatedAt": "2023-11-12T09:30:00.000Z"
+  },
+  {
+    "Id": 13,
+    "name": "Streamline Corp",
+    "industry": "Operations",
+    "website": "https://www.streamline.com",
+    "address": "174 Efficiency St, Minneapolis, MN 55401",
+    "notes": "Operational efficiency and process optimization consultancy.",
+    "createdAt": "2023-06-22T15:20:00.000Z",
+    "updatedAt": "2023-08-20T12:45:00.000Z"
+  },
+  {
+    "Id": 14,
+    "name": "Matrix Solutions",
+    "industry": "Software",
+    "website": "https://www.matrix.com",
+    "address": "285 Matrix Rd, Las Vegas, NV 89101",
+    "notes": "Custom software development and digital transformation services.",
+    "createdAt": "2023-08-15T10:15:00.000Z",
+    "updatedAt": "2023-09-08T14:55:00.000Z"
+  },
+  {
+    "Id": 15,
+    "name": "Quantum Dynamics",
+    "industry": "Research",
+    "website": "https://www.quantum.io",
+    "address": "396 Quantum Way, San Diego, CA 92101",
+    "notes": "Quantum computing research and advanced physics applications.",
+    "createdAt": "2023-07-30T16:30:00.000Z",
+    "updatedAt": "2023-10-14T11:20:00.000Z"
+  },
+  {
+    "Id": 16,
+    "name": "Synapse Technologies",
+    "industry": "Healthcare",
+    "website": "https://www.synapse.tech",
+    "address": "507 Medical Plaza, Houston, TX 77001",
+    "notes": "Healthcare technology and medical device development.",
+    "createdAt": "2023-09-18T12:50:00.000Z",
+    "updatedAt": "2023-11-25T15:10:00.000Z"
+  },
+  {
+    "Id": 17,
+    "name": "Apex Innovations",
+    "industry": "Innovation",
+    "website": "https://www.apex.com",
+    "address": "618 Innovation Blvd, Nashville, TN 37201",
+    "notes": "Product innovation and design thinking consultancy.",
+    "createdAt": "2023-05-15T08:45:00.000Z",
+    "updatedAt": "2023-07-30T13:25:00.000Z"
+  },
+  {
+    "Id": 18,
+    "name": "Velocity Networks",
+    "industry": "Telecommunications",
+    "website": "https://www.velocity.net",
+    "address": "729 Network Dr, Tampa, FL 33601",
+    "notes": "High-speed networking and telecommunications infrastructure.",
+    "createdAt": "2023-06-08T14:10:00.000Z",
+    "updatedAt": "2023-08-15T10:35:00.000Z"
+  },
+  {
+    "Id": 19,
+    "name": "Pinnacle Group",
+    "industry": "Finance",
+    "website": "https://www.pinnacle.com",
+    "address": "830 Financial St, Charlotte, NC 28201",
+    "notes": "Financial services and investment management firm.",
+    "createdAt": "2023-08-02T11:55:00.000Z",
+    "updatedAt": "2023-09-20T16:40:00.000Z"
+  },
+  {
+    "Id": 20,
+    "name": "Zenith Systems",
+    "industry": "Systems",
+    "website": "https://www.zenith.io",
+    "address": "941 Systems Ave, Salt Lake City, UT 84101",
+    "notes": "Enterprise system architecture and integration solutions.",
+    "createdAt": "2023-07-25T13:15:00.000Z",
+    "updatedAt": "2023-10-01T12:05:00.000Z"
+  },
+  {
+    "Id": 21,
+    "name": "Catalyst Solutions",
+    "industry": "Consulting",
+    "website": "https://www.catalyst.com",
+    "address": "152 Catalyst Rd, Kansas City, MO 64101",
+    "notes": "Change management and organizational development consulting.",
+    "createdAt": "2023-06-12T09:40:00.000Z",
+    "updatedAt": "2023-08-05T14:50:00.000Z"
+  },
+  {
+    "Id": 22,
+    "name": "Horizon Technologies",
+    "industry": "Technology",
+    "website": "https://www.horizon.net",
+    "address": "263 Horizon Blvd, Virginia Beach, VA 23451",
+    "notes": "Emerging technology solutions and digital innovation services.",
+    "createdAt": "2023-05-20T15:25:00.000Z",
+    "updatedAt": "2023-07-12T11:30:00.000Z"
+  },
+  {
+    "Id": 23,
+    "name": "Summit Enterprises",
+    "industry": "Real Estate",
+    "website": "https://www.summit.com",
+    "address": "374 Summit Dr, Colorado Springs, CO 80901",
+    "notes": "Commercial real estate development and property management.",
+    "createdAt": "2023-08-10T10:20:00.000Z",
+    "updatedAt": "2023-09-03T15:45:00.000Z"
+  },
+  {
+    "Id": 24,
+    "name": "Edge Computing Co",
+    "industry": "Cloud Services",
+    "website": "https://www.edge.io",
+    "address": "485 Edge Way, Raleigh, NC 27601",
+    "notes": "Edge computing and distributed cloud infrastructure solutions.",
+    "createdAt": "2023-04-28T12:35:00.000Z",
+    "updatedAt": "2023-06-25T09:15:00.000Z"
+  },
+  {
+    "Id": 25,
+    "name": "Pulse Technologies",
+    "industry": "Healthcare",
+    "website": "https://www.pulse.tech",
+    "address": "596 Pulse St, Sacramento, CA 95814",
+    "notes": "Medical monitoring technology and patient care solutions.",
+    "createdAt": "2023-07-18T16:05:00.000Z",
+    "updatedAt": "2023-08-18T13:20:00.000Z"
+  }
+]

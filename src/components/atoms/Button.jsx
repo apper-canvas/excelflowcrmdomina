@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { cn } from "@/utils/cn";
 
 const Button = React.forwardRef(({ 
@@ -34,13 +34,12 @@ const Button = React.forwardRef(({
         className
       )}
       disabled={disabled}
-      {...props}
+{...props}
     >
       {children}
     </button>
   );
 });
-
 Button.displayName = "Button";
 
 export default Button;

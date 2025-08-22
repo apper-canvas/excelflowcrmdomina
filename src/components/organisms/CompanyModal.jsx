@@ -6,15 +6,23 @@ import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
 import ApperIcon from "@/components/ApperIcon";
 
-const ContactModal = ({ isOpen, onClose, onSave, className }) => {
+const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    phone: "",
-    company: ""
+    industry: "",
+    website: "",
+    address: "",
+    notes: ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const industries = [
+    "Technology", "Manufacturing", "Healthcare", "Finance", "Consulting",
+    "Software", "Cloud Services", "Marketing", "Logistics", "Data Analytics",
+    "Research", "Operations", "Innovation", "Telecommunications", "Systems",
+    "Real Estate", "Education", "Energy", "Retail", "Agriculture"
+  ];
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -27,21 +35,15 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
     const newErrors = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = "Company name is required";
     }
     
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+    if (!formData.industry.trim()) {
+      newErrors.industry = "Industry is required";
     }
     
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone is required";
-    }
-    
-    if (!formData.company.trim()) {
-      newErrors.company = "Company is required";
+    if (formData.website && !formData.website.match(/^https?:\/\/.+/)) {
+      newErrors.website = "Please enter a valid website URL";
     }
     
     return newErrors;
@@ -60,19 +62,19 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
     
     try {
       await onSave(formData);
-      setFormData({ name: "", email: "", phone: "", company: "" });
+      setFormData({ name: "", industry: "", website: "", address: "", notes: "" });
       setErrors({});
-      toast.success("Contact added successfully!");
+      toast.success("Company added successfully!");
       onClose();
     } catch (error) {
-      toast.error("Failed to add contact. Please try again.");
+      toast.error("Failed to add company. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleClose = () => {
-    setFormData({ name: "", email: "", phone: "", company: "" });
+    setFormData({ name: "", industry: "", website: "", address: "", notes: "" });
     setErrors({});
     onClose();
   };
@@ -94,12 +96,12 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
         className={cn(
-          "relative bg-white rounded-lg shadow-xl w-full max-w-md",
+          "relative bg-white rounded-lg shadow-xl w-full max-w-lg",
           className
         )}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Add New Contact</h2>
+          <h2 className="text-xl font-semibold text-gray-900">Add New Company</h2>
           <Button variant="ghost" size="sm" onClick={handleClose}>
             <ApperIcon name="X" className="h-5 w-5" />
           </Button>
@@ -107,50 +109,69 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
         
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <FormField
-            label="Full Name"
+            label="Company Name"
             required
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             error={errors.name}
-            placeholder="Enter full name"
+            placeholder="Enter company name"
           />
           
-          <FormField
-            label="Email Address"
-            required
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            error={errors.email}
-            placeholder="Enter email address"
-          />
-          
-          <FormField
-            label="Phone Number"
-            required
-            value={formData.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-            error={errors.phone}
-            placeholder="Enter phone number"
-          />
-<div className="space-y-2">
+          <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Company <span className="text-red-500">*</span>
+              Industry <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
-              value={formData.company}
-              onChange={(e) => handleChange("company", e.target.value)}
+            <select
+              value={formData.industry}
+              onChange={(e) => handleChange("industry", e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm",
                 "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent",
-                errors.company && "border-red-300 focus:ring-red-500"
+                errors.industry && "border-red-300 focus:ring-red-500"
               )}
-              placeholder="Enter company name"
-            />
-            {errors.company && (
-              <p className="text-sm text-red-600">{errors.company}</p>
+            >
+              <option value="">Select an industry</option>
+              {industries.map(industry => (
+                <option key={industry} value={industry}>{industry}</option>
+              ))}
+            </select>
+            {errors.industry && (
+              <p className="text-sm text-red-600">{errors.industry}</p>
             )}
+          </div>
+          
+          <FormField
+            label="Website"
+            value={formData.website}
+            onChange={(e) => handleChange("website", e.target.value)}
+            error={errors.website}
+            placeholder="https://www.company.com"
+          />
+          
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Address
+            </label>
+            <textarea
+              value={formData.address}
+              onChange={(e) => handleChange("address", e.target.value)}
+              rows={2}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+              placeholder="Enter company address"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Notes
+            </label>
+            <textarea
+              value={formData.notes}
+              onChange={(e) => handleChange("notes", e.target.value)}
+              rows={3}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+              placeholder="Additional notes about the company"
+            />
           </div>
           
           <div className="flex justify-end space-x-3 pt-4">
@@ -175,7 +196,7 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
               ) : (
                 <>
                   <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
-                  Add Contact
+                  Add Company
                 </>
               )}
             </Button>
@@ -186,4 +207,4 @@ const ContactModal = ({ isOpen, onClose, onSave, className }) => {
   );
 };
 
-export default ContactModal;
+export default CompanyModal;

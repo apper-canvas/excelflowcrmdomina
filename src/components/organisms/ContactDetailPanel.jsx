@@ -59,9 +59,9 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                   </div>
                 </div>
 
-                <div>
+<div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
-                  <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
                     <ApperIcon name="Building2" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">{contact.company}</span>
                   </div>
