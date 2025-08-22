@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
-import ApperIcon from "@/components/ApperIcon";
+import { cn } from "@/utils/cn";
 
-const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
+const CompanyModal = ({ isOpen, onClose, onSave, company = null, className }) => {
   const [formData, setFormData] = useState({
     name: "",
     industry: "",
@@ -24,6 +24,27 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
     "Real Estate", "Education", "Energy", "Retail", "Agriculture"
   ];
 
+  // Pre-fill form when editing an existing company
+  React.useEffect(() => {
+    if (company) {
+      setFormData({
+        name: company.name || "",
+        industry: company.industry || "",
+        website: company.website || "",
+        address: company.address || "",
+        notes: company.notes || ""
+      });
+    } else {
+      setFormData({
+        name: "",
+        industry: "",
+        website: "",
+        address: "",
+        notes: ""
+      });
+    }
+    setErrors({});
+  }, [company, isOpen]);
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
@@ -59,15 +80,19 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
     }
 
     setIsSubmitting(true);
-    
-    try {
-      await onSave(formData);
+try {
+      if (company) {
+        await onSave(company.Id, formData);
+        toast.success("Company updated successfully!");
+      } else {
+        await onSave(formData);
+        toast.success("Company added successfully!");
+      }
       setFormData({ name: "", industry: "", website: "", address: "", notes: "" });
       setErrors({});
-      toast.success("Company added successfully!");
       onClose();
     } catch (error) {
-      toast.error("Failed to add company. Please try again.");
+      toast.error(company ? "Failed to update company. Please try again." : "Failed to add company. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -81,7 +106,7 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
 
   if (!isOpen) return null;
 
-  return (
+return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0 }}
@@ -100,8 +125,10 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
           className
         )}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Add New Company</h2>
+<div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">
+            {company ? "Edit Company" : "Add New Company"}
+          </h2>
           <Button variant="ghost" size="sm" onClick={handleClose}>
             <ApperIcon name="X" className="h-5 w-5" />
           </Button>
@@ -183,7 +210,7 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
             >
               Cancel
             </Button>
-            <Button 
+<Button 
               type="submit" 
               variant="primary"
               disabled={isSubmitting}
@@ -191,12 +218,12 @@ const CompanyModal = ({ isOpen, onClose, onSave, className }) => {
               {isSubmitting ? (
                 <>
                   <ApperIcon name="Loader2" className="h-4 w-4 mr-2 animate-spin" />
-                  Adding...
+                  {company ? "Updating..." : "Adding..."}
                 </>
               ) : (
                 <>
-                  <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
-                  Add Company
+                  <ApperIcon name={company ? "Save" : "Plus"} className="h-4 w-4 mr-2" />
+                  {company ? "Update Company" : "Add Company"}
                 </>
               )}
             </Button>

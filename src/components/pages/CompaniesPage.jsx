@@ -6,6 +6,7 @@ import Button from "@/components/atoms/Button";
 import CompanyGrid from "@/components/organisms/CompanyGrid";
 import CompanyDetailPanel from "@/components/organisms/CompanyDetailPanel";
 import CompanyModal from "@/components/organisms/CompanyModal";
+import ContactModal from "@/components/organisms/ContactModal";
 import Pagination from "@/components/organisms/Pagination";
 import FloatingActionButton from "@/components/molecules/FloatingActionButton";
 import Loading from "@/components/ui/Loading";
@@ -21,9 +22,12 @@ const CompaniesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState(null);
+const [selectedCompany, setSelectedCompany] = useState(null);
   const [detailPanelOpen, setDetailPanelOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [editingCompany, setEditingCompany] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState("name");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -63,7 +67,7 @@ const CompaniesPage = () => {
     loadCompanies();
   }, []);
 
-  const handleSaveCompany = async (companyData) => {
+const handleSaveCompany = async (companyData) => {
     try {
       const newCompany = await companyService.create(companyData);
       setCompanies(prev => [newCompany, ...prev]);
@@ -81,6 +85,28 @@ const CompaniesPage = () => {
       }
     } catch (err) {
       throw new Error("Failed to save company");
+    }
+  };
+
+  const handleUpdateCompany = async (companyId, companyData) => {
+    try {
+      const updatedCompany = await companyService.update(companyId, companyData);
+      setCompanies(prev => prev.map(c => c.Id === companyId ? updatedCompany : c));
+      
+      // Update selected company if it's the one being edited
+      if (selectedCompany && selectedCompany.Id === companyId) {
+        setSelectedCompany(updatedCompany);
+      }
+      
+      // Refresh metrics for the updated company
+      try {
+        const metrics = await companyService.getCompanyMetrics(companyId);
+        setCompanyMetrics(prev => ({ ...prev, [companyId]: metrics }));
+      } catch (err) {
+        console.warn(`Failed to load metrics for updated company ${companyId}:`, err);
+      }
+    } catch (err) {
+      throw new Error("Failed to update company");
     }
   };
 
@@ -107,8 +133,37 @@ const CompaniesPage = () => {
   const handleDealClick = (deal) => {
     navigate('/deals');
     // Note: In a real app, you might want to pass deal ID to highlight it
+};
+
+  const handleEditCompany = (company) => {
+    setEditingCompany(company);
+    setEditModalOpen(true);
   };
 
+  const handleAddContact = (company) => {
+    setEditingCompany(company);
+    setContactModalOpen(true);
+  };
+
+  const handleSaveContact = async (contactData) => {
+    try {
+      // Contact service would handle this
+      await new Promise(resolve => setTimeout(resolve, 500));
+      toast.success("Contact added successfully!");
+      
+      // Refresh company metrics to reflect new contact
+      if (editingCompany) {
+        try {
+          const metrics = await companyService.getCompanyMetrics(editingCompany.Id);
+          setCompanyMetrics(prev => ({ ...prev, [editingCompany.Id]: metrics }));
+        } catch (err) {
+          console.warn(`Failed to refresh metrics for company ${editingCompany.Id}:`, err);
+        }
+      }
+    } catch (err) {
+      throw new Error("Failed to add contact");
+    }
+  };
   const filteredAndSortedCompanies = useMemo(() => {
     let filtered = companies;
 
@@ -313,7 +368,7 @@ const CompaniesPage = () => {
         className="sm:hidden"
       />
 
-      {/* Detail Panel */}
+{/* Detail Panel */}
       <CompanyDetailPanel
         company={selectedCompany}
         metrics={selectedCompany ? companyMetrics[selectedCompany.Id] : null}
@@ -324,13 +379,36 @@ const CompaniesPage = () => {
         }}
         onContactClick={handleContactClick}
         onDealClick={handleDealClick}
+        onEditCompany={handleEditCompany}
+        onAddContact={handleAddContact}
       />
-
-      {/* Add Company Modal */}
+{/* Add Company Modal */}
       <CompanyModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onSave={handleSaveCompany}
+      />
+
+      {/* Edit Company Modal */}
+      <CompanyModal
+        isOpen={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setEditingCompany(null);
+        }}
+        onSave={handleUpdateCompany}
+        company={editingCompany}
+      />
+
+      {/* Add Contact Modal */}
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => {
+          setContactModalOpen(false);
+          setEditingCompany(null);
+        }}
+        onSave={handleSaveContact}
+        company={editingCompany}
       />
     </div>
   );

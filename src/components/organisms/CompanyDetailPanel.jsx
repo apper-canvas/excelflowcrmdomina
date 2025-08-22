@@ -11,6 +11,8 @@ const CompanyDetailPanel = ({
   onClose, 
   onContactClick,
   onDealClick,
+  onEditCompany,
+  onAddContact,
   className 
 }) => {
   if (!company) return null;
@@ -183,13 +185,21 @@ const CompanyDetailPanel = ({
                 </div>
               )}
 
-              {/* Action Buttons */}
+{/* Action Buttons */}
               <div className="space-y-3">
-                <Button className="w-full" variant="primary">
+                <Button 
+                  className="w-full" 
+                  variant="primary"
+                  onClick={() => onEditCompany?.(company)}
+                >
                   <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                   Edit Company
                 </Button>
-                <Button className="w-full" variant="secondary">
+                <Button 
+                  className="w-full" 
+                  variant="secondary"
+                  onClick={() => onAddContact?.(company)}
+                >
                   <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
                   Add Contact
                 </Button>
@@ -257,13 +267,23 @@ const CompanyDetailPanel = ({
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
+{/* Action Buttons */}
                   <div className="space-y-2">
-                    <Button className="w-full" variant="primary" size="sm">
+                    <Button 
+                      className="w-full" 
+                      variant="primary" 
+                      size="sm"
+                      onClick={() => onEditCompany?.(company)}
+                    >
                       <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                       Edit
                     </Button>
-                    <Button className="w-full" variant="secondary" size="sm">
+                    <Button 
+                      className="w-full" 
+                      variant="secondary" 
+                      size="sm"
+                      onClick={() => onAddContact?.(company)}
+                    >
                       <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
                       Add Contact
                     </Button>
