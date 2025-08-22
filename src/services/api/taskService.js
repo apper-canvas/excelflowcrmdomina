@@ -59,7 +59,7 @@ class TaskService {
     return { ...this.tasks[index] };
   }
 
-  async updateStatus(id, newStatus) {
+async updateStatus(id, newStatus) {
     await delay(200);
     
     const index = this.tasks.findIndex(t => t.Id === parseInt(id));
@@ -67,11 +67,19 @@ class TaskService {
       throw new Error("Task not found");
     }
     
-    const oldStatus = this.tasks[index].status;
-    this.tasks[index] = {
-      ...this.tasks[index],
+    const updateData = {
       status: newStatus,
       updatedAt: new Date().toISOString()
+    };
+    
+    // Add completion timestamp when marking as completed
+    if (newStatus === "completed") {
+      updateData.completedAt = new Date().toISOString();
+    }
+    
+    this.tasks[index] = {
+      ...this.tasks[index],
+      ...updateData
     };
     
     toast.success(`Task marked as ${newStatus}`);

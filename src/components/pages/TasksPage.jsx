@@ -1,38 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "@/components/atoms/Button";
-import SearchInput from "@/components/atoms/SearchInput";
+import { taskService } from "@/services/api/taskService";
+import { contactService } from "@/services/api/contactService";
+import { dealService } from "@/services/api/dealService";
 import ApperIcon from "@/components/ApperIcon";
-import TaskTable from "@/components/organisms/TaskTable";
 import TaskModal from "@/components/organisms/TaskModal";
-import Loading from "@/components/ui/Loading";
+import TaskTable from "@/components/organisms/TaskTable";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
-import { taskService } from "@/services/api/taskService";
+import Loading from "@/components/ui/Loading";
+import FormField from "@/components/molecules/FormField";
+import Button from "@/components/atoms/Button";
+import SearchInput from "@/components/atoms/SearchInput";
 
 const TasksPage = () => {
-  const [tasks, setTasks] = useState([]);
+const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [dateRangeFilter, setDateRangeFilter] = useState({ start: "", end: "" });
+  const [contactFilter, setContactFilter] = useState("all");
+  const [dealFilter, setDealFilter] = useState("all");
   const [sortField, setSortField] = useState("dueDate");
   const [sortDirection, setSortDirection] = useState("asc");
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [contacts, setContacts] = useState([]);
+  const [deals, setDeals] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
     loadTasks();
+    loadContacts();
+    loadDeals();
   }, []);
 
   useEffect(() => {
     filterAndSortTasks();
-  }, [tasks, searchTerm, statusFilter, priorityFilter, sortField, sortDirection]);
+  }, [tasks, searchTerm, statusFilter, priorityFilter, dateRangeFilter, contactFilter, dealFilter, sortField, sortDirection]);
 
-  const loadTasks = async () => {
+const loadTasks = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -46,7 +56,25 @@ const TasksPage = () => {
     }
   };
 
-  const filterAndSortTasks = () => {
+  const loadContacts = async () => {
+    try {
+      const contactsData = await contactService.getAll();
+      setContacts(contactsData);
+    } catch (err) {
+      console.error("Load contacts error:", err);
+    }
+  };
+
+  const loadDeals = async () => {
+    try {
+      const dealsData = await dealService.getAll();
+      setDeals(dealsData);
+    } catch (err) {
+      console.error("Load deals error:", err);
+    }
+  };
+
+const filterAndSortTasks = () => {
     let filtered = [...tasks];
 
     // Apply search filter
@@ -67,8 +95,37 @@ const TasksPage = () => {
       filtered = filtered.filter(task => task.priority === priorityFilter);
     }
 
-    // Apply sorting
+    // Apply date range filter
+    if (dateRangeFilter.start) {
+      filtered = filtered.filter(task => 
+        new Date(task.dueDate) >= new Date(dateRangeFilter.start)
+      );
+    }
+    if (dateRangeFilter.end) {
+      filtered = filtered.filter(task => 
+        new Date(task.dueDate) <= new Date(dateRangeFilter.end)
+      );
+    }
+
+    // Apply contact filter
+    if (contactFilter !== "all") {
+      filtered = filtered.filter(task => task.contactId === parseInt(contactFilter));
+    }
+
+    // Apply deal filter
+    if (dealFilter !== "all") {
+      filtered = filtered.filter(task => task.dealId === parseInt(dealFilter));
+    }
+
+    // Apply sorting - group by status first
     filtered.sort((a, b) => {
+      // First sort by status (pending first, then completed)
+      if (a.status !== b.status) {
+        if (a.status === "pending" && b.status === "completed") return -1;
+        if (a.status === "completed" && b.status === "pending") return 1;
+      }
+
+      // Then sort by the selected field within status groups
       let aValue = a[sortField];
       let bValue = b[sortField];
 
@@ -166,8 +223,26 @@ const TasksPage = () => {
     const overdue = tasks.filter(t => 
       t.status === "pending" && new Date(t.dueDate) < new Date()
     ).length;
+return { total, completed, pending, overdue };
+  };
 
-    return { total, completed, pending, overdue };
+  const getContactName = (contactId) => {
+    const contact = contacts.find(c => c.Id === contactId);
+    return contact ? contact.name : `Contact ${contactId}`;
+  };
+
+  const getDealName = (dealId) => {
+    const deal = deals.find(d => d.Id === dealId);
+    return deal ? deal.company : `Deal ${dealId}`;
+  };
+
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setStatusFilter("all");
+    setPriorityFilter("all");
+    setDateRangeFilter({ start: "", end: "" });
+    setContactFilter("all");
+    setDealFilter("all");
   };
 
   if (loading) {
@@ -260,41 +335,116 @@ const TasksPage = () => {
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <SearchInput
-              value={searchTerm}
-              onChange={setSearchTerm}
-              placeholder="Search tasks..."
-            />
+{/* Filters and Search */}
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="space-y-4">
+          {/* Search Bar */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <SearchInput
+                value={searchTerm}
+                onChange={setSearchTerm}
+                placeholder="Search tasks..."
+              />
+            </div>
+            <Button 
+              onClick={clearAllFilters}
+              variant="secondary"
+              size="sm"
+              className="sm:w-auto w-full"
+            >
+              <ApperIcon name="X" className="h-4 w-4 mr-2" />
+              Clear Filters
+            </Button>
           </div>
-          <div className="flex gap-4">
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-            </select>
-            <select
-              value={priorityFilter}
-              onChange={(e) => setPriorityFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <option value="all">All Priority</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
+
+          {/* Filter Controls */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {/* Status Filter */}
+            <FormField label="Status">
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              >
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+            </FormField>
+
+            {/* Priority Filter */}
+            <FormField label="Priority">
+              <select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              >
+                <option value="all">All Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </FormField>
+
+            {/* Date Range Start */}
+            <FormField label="Due From">
+              <input
+                type="date"
+                value={dateRangeFilter.start}
+                onChange={(e) => setDateRangeFilter(prev => ({ ...prev, start: e.target.value }))}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              />
+            </FormField>
+
+            {/* Date Range End */}
+            <FormField label="Due To">
+              <input
+                type="date"
+                value={dateRangeFilter.end}
+                onChange={(e) => setDateRangeFilter(prev => ({ ...prev, end: e.target.value }))}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              />
+            </FormField>
+
+            {/* Contact Filter */}
+            <FormField label="Contact">
+              <select
+                value={contactFilter}
+                onChange={(e) => setContactFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              >
+                <option value="all">All Contacts</option>
+                {contacts.map(contact => (
+                  <option key={contact.Id} value={contact.Id}>
+                    {contact.name}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+          </div>
+
+          {/* Deal Filter - Full Width */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <FormField label="Deal">
+              <select
+                value={dealFilter}
+                onChange={(e) => setDealFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+              >
+                <option value="all">All Deals</option>
+                {deals.map(deal => (
+                  <option key={deal.Id} value={deal.Id}>
+                    {deal.company} - ${deal.dealValue.toLocaleString()}
+                  </option>
+                ))}
+              </select>
+            </FormField>
           </div>
         </div>
       </div>
 
-      {/* Tasks Table */}
+{/* Tasks Table */}
       <TaskTable
         tasks={filteredTasks}
         onTaskClick={handleTaskClick}
@@ -304,6 +454,8 @@ const TasksPage = () => {
         onSort={handleSort}
         sortField={sortField}
         sortDirection={sortDirection}
+        getContactName={getContactName}
+        getDealName={getDealName}
       />
 
       {/* Task Modal */}
