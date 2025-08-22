@@ -202,6 +202,8 @@ return (
         dealId={dealId}
         onActivityAdded={handleActivityAdded}
       />
-    </div>
+</div>
   );
 };
+
+export default ActivityTimeline;

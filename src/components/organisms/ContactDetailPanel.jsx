@@ -58,9 +58,9 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                     <ApperIcon name="Phone" className="h-4 w-4 text-gray-400 mr-3" />
                     <span className="text-sm text-gray-900">{contact.phone}</span>
                   </div>
-                </div>
+</div>
 
-<div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
                   <div className="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
                     <ApperIcon name="Building2" className="h-4 w-4 text-gray-400 mr-3" />
@@ -99,10 +99,10 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                   <ApperIcon name="MessageCircle" className="h-4 w-4 mr-2" />
                   Send Message
                 </Button>
-                <Button className="w-full" variant="ghost">
+<Button className="w-full" variant="ghost">
                   <ApperIcon name="Trash2" className="h-4 w-4 mr-2" />
                   Delete Contact
-</Button>
+                </Button>
               </div>
 
               {/* Activity Timeline */}
@@ -185,13 +185,12 @@ const ContactDetailPanel = ({ contact, isOpen, onClose, className }) => {
                     <Button className="w-full" variant="primary" size="sm">
                       <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                       Edit
-                    </Button>
+</Button>
                     <Button className="w-full" variant="secondary" size="sm">
                       <ApperIcon name="MessageCircle" className="h-4 w-4 mr-2" />
-Message
+                      Message
                     </Button>
                   </div>
-
                   {/* Activity Timeline */}
                   <ActivityTimeline contactId={contact.Id} className="border-t border-gray-200 pt-4" />
                 </div>
